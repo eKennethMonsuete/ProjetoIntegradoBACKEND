@@ -34,22 +34,32 @@ public class UserController {
         User newUser = new User(data);
         repository.save(newUser);
         System.out.println(data);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("User saved");
 
     }
 
     @PutMapping
     @Transactional
-    public ResponseEntity updateUser(@RequestBody UpdateUserDTO data){
+    public ResponseEntity updateUser(@RequestBody UpdateUserDTO data) {
         Optional<User> optionalUser = repository.findById(data.id());
-        if(optionalUser.isPresent()){
+        if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             user.setName(data.name());
             user.setPassword(data.password());
             user.setEmail(data.email());
             return ResponseEntity.ok(user);
-        }else {
+        } else {
             throw new EntityNotFoundException();
+        }
+    }
+
+    @DeleteMapping()
+    public ResponseEntity deleteUser(@RequestBody UpdateUserDTO data){
+            repository.deleteById(data.id());
+            return ResponseEntity.noContent().build();
+
+            //talvez seja melhor usar o @PathVariable
+
         }
 
 
@@ -62,4 +72,3 @@ public class UserController {
 
 
     }
-}
