@@ -25,10 +25,13 @@ public class User {
 
     private String password;
 
-        public User(UserRecordDTO userDTO){
-            this.name = userDTO.name();
-            this.email = userDTO.email();
-            this.password = userDTO.password();
+
+
+
+        public User(userRegisterDTO data){
+            this.name = data.name();
+            this.email = data.email();
+            this.password = data.password();
 
         }
 
