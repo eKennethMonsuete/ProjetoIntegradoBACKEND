@@ -44,8 +44,8 @@ public class UserController {
     public ResponseEntity salvarUser(@RequestBody userRegisterDTO data ){
         User newUser = new User(data);
         repository.save(newUser);
-        System.out.println(data);
-        return ResponseEntity.ok("User saved");
+        System.out.println(data.measures());
+        return ResponseEntity.ok(data);
 
     }
 

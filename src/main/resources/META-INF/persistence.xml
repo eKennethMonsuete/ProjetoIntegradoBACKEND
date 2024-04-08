@@ -12,7 +12,7 @@
             <property name="jakarta.persistence.jdbc.user"   value="root" />
             <property name="jakarta.persistence.jdbc.password" value="987654321abc" />
 
-            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql"   value="true" />
             <property name="hibernate.format_sql" value="true" />
 

@@ -1,5 +1,6 @@
 package br.com.projecao.projetogym.api.user;
 
+import br.com.projecao.projetogym.api.measures.Measures;
 import br.com.projecao.projetogym.api.user.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -16,15 +17,20 @@ public class ArrumaBanco {
 
         EntityManager em = emf.createEntityManager();
 
-        User user = new User();
+       User user = new User();
 
-        user.setName("Coocoo");
-        user.setEmail("adasasd@asda");
-        user.setPassword("121345");
+        Measures m = new Measures(2, 3, 4,5,6,7,8,7);
+
+       // Measures m2 = new Measures();
+
+     //   user.setName("Coocoo");
+       // user.setEmail("adasasd@asda");
+       // user.setPassword("121345");
 
 
         em.getTransaction().begin();
         em.persist(user);
+        em.persist(m);
         em.getTransaction().commit();
         em.close();
 

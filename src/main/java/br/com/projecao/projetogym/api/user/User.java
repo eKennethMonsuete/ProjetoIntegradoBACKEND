@@ -1,9 +1,13 @@
 package br.com.projecao.projetogym.api.user;
 
 
+import br.com.projecao.projetogym.api.measures.Measures;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Transactional
 @NoArgsConstructor
@@ -25,6 +29,11 @@ public class User {
 
     private String password;
 
+    @OneToMany(mappedBy="user")
+    private List<Measures> measures = new ArrayList<>();
+
+
+
 
 
 
@@ -35,18 +44,9 @@ public class User {
 
         }
 
-        public void updateUser(UpdateUserDTO data){
-            this.name = data.name();
-            this.password = data.password();
-            this.email = data.email();
 
-        }
 
-        //teste para o git
 
-    public void testeGit(){
-        System.out.println("asdkljasdklasjd");
-    }
 
 
 }
