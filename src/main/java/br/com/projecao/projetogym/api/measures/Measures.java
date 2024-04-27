@@ -39,7 +39,7 @@ public class Measures {
     @JoinColumn(name ="user_id")
     private User user;
 
-    public Measures(registerMeasuresDTO data) {
+    public Measures(updateMeasuresDTO data) {
         this.weight = data.weight();
         this.left_biceps = data.left_biceps();;
         this.right_biceps = data.right_biceps(); ;

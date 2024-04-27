@@ -1,6 +1,7 @@
 package br.com.projecao.projetogym.api.measures;
 
-public record registerMeasuresDTO(
+public record updateMeasuresDTO(
+        Long id, 
         float weight,
 
         float left_biceps,

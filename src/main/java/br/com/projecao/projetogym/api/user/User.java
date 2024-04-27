@@ -25,7 +25,11 @@ public class User {
 
     private String name;
 
+    private String surname;
+
     private String email;
+
+    private String whatsapp;
 
     private String password;
 
@@ -37,9 +41,11 @@ public class User {
 
 
 
-        public User(userRegisterDTO data){
+        public User(userDTO data){
             this.name = data.name();
+            this.surname = data.surname();
             this.email = data.email();
+            this.whatsapp = data.whatsapp();
             this.password = data.password();
 
         }

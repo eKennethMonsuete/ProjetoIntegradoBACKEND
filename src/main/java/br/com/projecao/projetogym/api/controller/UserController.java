@@ -18,33 +18,25 @@ import java.util.Optional;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    private UserRepository repository;
 
     @Autowired
     private userService userService;
 
-
-    @GetMapping("aaa")
-    public ResponseEntity testeOk(){
-        var TesteTudo = repository.findAll();
-        return ResponseEntity.ok(TesteTudo);
-
-    }
-
     @GetMapping
     public List findUsers(){
-        return this.userService.findUsers();
+        return this.userService.findUsers();}
 
-
+    @GetMapping("/{id}")
+    public User getOneUser(@PathVariable Long id){
+        return userService.findOneUser(id);
     }
 
     @PostMapping
     @Transactional
-    public ResponseEntity salvarUser(@RequestBody userRegisterDTO data ){
-        User newUser = new User(data);
-        repository.save(newUser);
-        System.out.println(data.measures());
+    public ResponseEntity salvarUser(@RequestBody userDTO data ){
+       // User newUser = new User(data);
+        userService.createUser(data);
+       // System.out.println(data.measures());
         return ResponseEntity.ok(data);
 
     }
@@ -52,24 +44,18 @@ public class UserController {
     @PutMapping
     @Transactional
     public ResponseEntity updateUser(@RequestBody UpdateUserDTO data) {
-        Optional<User> optionalUser = repository.findById(data.id());
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            user.setName(data.name());
-            user.setPassword(data.password());
-            user.setEmail(data.email());
-            return ResponseEntity.ok(user);
-        } else {
-            throw new EntityNotFoundException();
-        }
+
+        userService.updateUser(data.id(), data);
+       return ResponseEntity.ok("deu certo");
+
     }
 
     @DeleteMapping()
-    public ResponseEntity deleteUser(@RequestBody UpdateUserDTO data){
-            repository.deleteById(data.id());
-            return ResponseEntity.noContent().build();
+    public ResponseEntity deleteUser(@RequestBody UpdateUserDTO id){
+        userService.deleteUser(id);
+            return  ResponseEntity.ok().build() ;
 
-            //talvez seja melhor usar o @PathVariable
+            //talvez seja melhor usar o @PathVariable @PathVariable Long id
 
         }
 

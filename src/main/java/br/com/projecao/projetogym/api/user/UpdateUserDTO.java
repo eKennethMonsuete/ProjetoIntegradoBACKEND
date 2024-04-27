@@ -9,5 +9,7 @@ public record UpdateUserDTO(
         Long id,
         String name,
         String email,
+        String surname,
+        String whatsapp,
         String password) {
 }
