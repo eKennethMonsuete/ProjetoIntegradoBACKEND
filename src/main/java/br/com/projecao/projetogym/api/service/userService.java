@@ -8,6 +8,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.GsonBuilderUtils;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import br.com.projecao.projetogym.api.user.userDTO;
 
@@ -37,7 +38,11 @@ public class userService {
     }
 
     public ResponseEntity createUser(userDTO data){
-        User newUser = new User(data);
+        if(this.repository.findByLogin(data.login()) != null) return ResponseEntity.badRequest().build();
+
+        String encrypterPassword = new BCryptPasswordEncoder().encode(data.password());
+
+        User newUser = new User(data, encrypterPassword, data.role());
         repository.save(newUser);
         return ResponseEntity.ok(newUser) ;
 

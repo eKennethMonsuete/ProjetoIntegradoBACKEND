@@ -23,6 +23,7 @@ public class UserController {
     private userService userService;
 
     @GetMapping
+    @CrossOrigin(origins = "http://localhost:4200")
     public List findUsers(){
         return this.userService.findUsers();}
 
@@ -33,6 +34,7 @@ public class UserController {
 
     @PostMapping
     @Transactional
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity salvarUser(@RequestBody userDTO data ){
        // User newUser = new User(data);
         userService.createUser(data);
