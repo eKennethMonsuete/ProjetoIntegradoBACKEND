@@ -38,7 +38,7 @@ public class UserController {
     public ResponseEntity salvarUser(@RequestBody userDTO data ){
        // User newUser = new User(data);
         userService.createUser(data);
-       // System.out.println(data.measures());
+       System.out.println("algo no user 8080");
         return ResponseEntity.ok(data);
 
     }

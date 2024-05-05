@@ -1,22 +1,27 @@
 package br.com.projecao.projetogym.api.service;
 
 
-import br.com.projecao.projetogym.api.user.UpdateUserDTO;
-import br.com.projecao.projetogym.api.user.User;
-import br.com.projecao.projetogym.api.user.UserRepository;
+import br.com.projecao.projetogym.api.infra.security.TokenService;
+import br.com.projecao.projetogym.api.user.*;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.GsonBuilderUtils;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import br.com.projecao.projetogym.api.user.userDTO;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class userService {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private TokenService tokenService;
 
     @Autowired
     private UserRepository repository;
@@ -38,13 +43,21 @@ public class userService {
     }
 
     public ResponseEntity createUser(userDTO data){
-        if(this.repository.findByLogin(data.login()) != null) return ResponseEntity.badRequest().build();
+        Optional<User> user = this.repository.findByEmail(data.email());
+        if(user.isEmpty()){
+            User newUser = new User();
+            newUser.setPassword(passwordEncoder.encode(data.password()));
+            newUser.setName(data.name());
+            newUser.setWhatsapp(data.whatsapp());
+            newUser.setSurname(data.surname());
 
-        String encrypterPassword = new BCryptPasswordEncoder().encode(data.password());
+            newUser.setEmail(data.email());
 
-        User newUser = new User(data, encrypterPassword, data.role());
-        repository.save(newUser);
-        return ResponseEntity.ok(newUser) ;
+            repository.save(newUser);
+            String token = this.tokenService.generateToken(newUser);
+            return ResponseEntity.ok(new LoginResponseDTO(newUser.getName(), token)) ;
+        }
+        return ResponseEntity.badRequest().build();
 
     }
 
@@ -68,5 +81,8 @@ public class userService {
         return ResponseEntity.ok("user deletado");
     }
 
+//    public Optional<User> findByEmailService(AuthDTO data){
+//       return repository.findByEmail(data.email().toString());
+//    }
 
 }

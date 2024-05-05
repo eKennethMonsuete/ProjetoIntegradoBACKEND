@@ -23,8 +23,8 @@ public class TokenService {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create().
                     withIssuer("GymBack")
-                    .withSubject(user.getLogin())
-                    .withExpiresAt(genExpireDate())
+                    .withSubject(user.getEmail())
+                    .withExpiresAt(this.genExpireDate())
                     .sign(algorithm);
             return token;
         }
@@ -45,7 +45,7 @@ public class TokenService {
                     .getSubject();
 
         }catch (JWTVerificationException exception){
-            return "";
+            return null;
 
         }
     }

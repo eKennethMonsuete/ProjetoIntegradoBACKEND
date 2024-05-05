@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -22,18 +22,20 @@ public class SecurityConfigurations {
     SecurityFilter securityFilter;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
-        return httpSecurity
-                .csrf(csrf -> csrf.disable())
+    public DefaultSecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
+        httpSecurity
+           .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/measures").hasRole("ADMIN")
+
+
                         .anyRequest().authenticated()
-                )
-                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
+         )
+         .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
+        return httpSecurity.build();
+
     }
 
     @Bean
@@ -46,3 +48,31 @@ public class SecurityConfigurations {
 
 
 }
+
+
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
+//        return httpSecurity
+//                .csrf(csrf -> csrf.disable())
+//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .authorizeHttpRequests(authorize -> authorize
+//                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+//                        .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+//                        .requestMatchers(HttpMethod.POST, "/measures").hasRole("ADMIN")
+//                        .anyRequest().authenticated()
+//                )
+//                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+//                .build();
+//    }
+
+
+// httpSecurity
+//         .csrf(csrf -> csrf.disable())
+//         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//         .authorizeHttpRequests(authorize -> authorize
+//         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+//         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+//         .anyRequest().authenticated()
+//         )
+//         .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
+//        return httpSecurity.build();
