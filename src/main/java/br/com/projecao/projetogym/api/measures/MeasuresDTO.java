@@ -1,6 +1,8 @@
 package br.com.projecao.projetogym.api.measures;
 
-public record measuresDTO(float weight,
+import br.com.projecao.projetogym.api.user.userDTO1;
+
+public record MeasuresDTO(float weight,
 
                           float left_biceps,
 
@@ -14,5 +16,7 @@ public record measuresDTO(float weight,
 
                           float left_calf,
 
-                          float right_calf) {
+                          float right_calf
+
+                         ) {
 }

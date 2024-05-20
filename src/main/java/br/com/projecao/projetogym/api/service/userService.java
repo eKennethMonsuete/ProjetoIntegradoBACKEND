@@ -2,10 +2,14 @@ package br.com.projecao.projetogym.api.service;
 
 
 import br.com.projecao.projetogym.api.infra.security.TokenService;
+import br.com.projecao.projetogym.api.measures.Measures;
+import br.com.projecao.projetogym.api.measures.MeasuresDTO;
 import br.com.projecao.projetogym.api.user.*;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+
+import br.com.projecao.projetogym.api.user.userDTO;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class userService {
@@ -26,16 +31,40 @@ public class userService {
     @Autowired
     private UserRepository repository;
 
-    public List<User> findUsers(){
-        var listarTudo = repository.findAll();
-        return listarTudo;
+    public List<userDTO> findUsers(){
+        List<User> users = repository.findAll();
+        return users.stream()
+                .map(this::mapUserToDTO)
+                .collect(Collectors.toList());
 
+    }
+    public MeasuresDTO mapMeasureToDTO(Measures measure) {
+        return new MeasuresDTO(
+                measure.getWeight(),
+                measure.getLeft_biceps(),
+                measure.getRight_biceps(),
+                measure.getWaist(),
+                measure.getLeft_quadriceps(),
+                measure.getRight_quadriceps(),
+                measure.getLeft_calf(),
+                measure.getRight_calf()
+
+        );
+    }
+
+
+    public userDTO mapUserToDTO(User user) {
+        List<MeasuresDTO> measureDTOs = user.getMeasures().stream()
+                .map(this::mapMeasureToDTO)
+                .collect(Collectors.toList());
+        return new userDTO(user.getName(), user.getEmail(), user.getPassword(), user.getSurname(), user.getWhatsapp(), measureDTOs);
     }
 
     public User findOneUser(Long id){
       Optional<User> user = repository.findById(id);
       if (user.isPresent()){
           return user.get();
+
       }
       else {
           throw new RuntimeException("Usuário não encontrado com o ID: " + id);

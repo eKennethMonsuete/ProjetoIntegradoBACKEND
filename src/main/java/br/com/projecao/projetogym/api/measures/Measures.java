@@ -36,7 +36,7 @@ public class Measures {
     private float right_calf;
 
     @ManyToOne
-    @JoinColumn(name ="user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     public Measures(updateMeasuresDTO data) {
@@ -48,6 +48,7 @@ public class Measures {
         this.right_quadriceps = data.right_quadriceps(); ;
         this.left_calf = data.left_calf();
         this.right_calf = data.right_calf();
+        this.user = data.user();
     }
 
     public Measures(float weight, float left_biceps, float right_biceps, float waist, float left_quadriceps, float right_quadriceps, float left_calf, float right_calf) {
@@ -60,4 +61,6 @@ public class Measures {
         this.left_calf = left_calf;
         this.right_calf = right_calf;
     }
+
+
 }

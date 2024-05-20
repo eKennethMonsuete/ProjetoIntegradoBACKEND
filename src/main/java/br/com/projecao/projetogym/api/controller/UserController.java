@@ -3,7 +3,6 @@ package br.com.projecao.projetogym.api.controller;
 import br.com.projecao.projetogym.api.service.userService;
 
 import br.com.projecao.projetogym.api.user.*;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
@@ -12,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -24,12 +22,13 @@ public class UserController {
 
     @GetMapping
     @CrossOrigin(origins = "http://localhost:4200")
-    public List findUsers(){
+    public List<userDTO> findUsers(){
         return this.userService.findUsers();}
 
     @GetMapping("/{id}")
-    public User getOneUser(@PathVariable Long id){
-        return userService.findOneUser(id);
+    public userDTO getOneUser(@PathVariable Long id){
+        User user = userService.findOneUser(id);
+        return userService.mapUserToDTO(user);
     }
 
     @PostMapping

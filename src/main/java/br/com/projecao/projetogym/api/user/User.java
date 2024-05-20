@@ -41,8 +41,8 @@ public class User  {
 
 
 
-    @OneToMany(mappedBy="user")
-    private List<Measures> measures = new ArrayList<>();
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.LAZY )
+    private List<Measures> measures;
 
 
 
