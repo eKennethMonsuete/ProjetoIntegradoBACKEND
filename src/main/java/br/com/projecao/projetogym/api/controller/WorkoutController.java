@@ -27,7 +27,8 @@ public class WorkoutController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity saveWorkout(@RequestBody workoutDTO data){
+    public ResponseEntity saveWorkout(@RequestHeader("Authorization") String token,@RequestBody workoutDTO data){
+        System.out.println("chegou aqui em /workout save");
         workourService.saveWorkout(data);
         return ResponseEntity.ok("Treino Salvo");
 

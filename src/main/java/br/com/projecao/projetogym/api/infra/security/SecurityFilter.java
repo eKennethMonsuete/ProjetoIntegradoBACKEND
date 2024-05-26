@@ -16,6 +16,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Optional;
 
 
 @Component
@@ -29,23 +30,96 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        var token = this.recoverToken(request);
-        var login = tokenService.validateToken(token);
+        String token = recoverToken(request);
+        System.out.println("Token recebido: " + token);
 
-        if(login != null){
-            User user = userRepository.findByEmail(login).orElseThrow(() -> new RuntimeException("user not found"));
+        if (token != null) {
+            String login = tokenService.validateToken(token);
+            System.out.println("Login extraído do token: " + login);
 
-            var authorithies = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
-            var authentication = new UsernamePasswordAuthenticationToken(user, null, authorithies);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-
+            if (login != null) {
+                Optional<User> userOpt = userRepository.findByEmail(login);
+                if (userOpt.isPresent()) {
+                    User user = userOpt.get();
+                    var authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+                    var authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                    System.out.println("Usuário autenticado: " + user.getEmail());
+                } else {
+                    System.out.println("Usuário não encontrado: " + login);
+                }
+            } else {
+                System.out.println("Token validation failed.");
+            }
+        } else {
+            System.out.println("Token não presente no cabeçalho.");
         }
         filterChain.doFilter(request, response);
     }
 
+
+
     private String recoverToken(HttpServletRequest  request){
         var authHeader = request.getHeader("Authorization");
-        if (authHeader == null) return null;
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return null;
+        }
         return authHeader.replace("Bearer ", "");
+
     }
 }
+
+
+
+
+//@Override
+//protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+//    var token = this.recoverToken(request);
+//
+//    var login = tokenService.validateToken(token);
+//
+//    if(login != null){
+//        User user = userRepository.findByEmail(login).orElseThrow(() -> new RuntimeException("user not found"));
+//
+//        var authorithies = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+//        var authentication = new UsernamePasswordAuthenticationToken(user, null, authorithies);
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//
+//    }
+//    filterChain.doFilter(request, response);
+//}
+//
+//private String recoverToken(HttpServletRequest  request){
+//    var authHeader = request.getHeader("Authorization");
+//    if (authHeader == null) return null;
+//    return authHeader.replace("Bearer ", "");
+//}
+//}
+
+//private String recoverToken(HttpServletRequest  request){
+//    var authHeader = request.getHeader("Authorization");
+//    if (authHeader == null) return null;
+//    return authHeader.replace("Bearer ", "");
+//}
+
+
+
+//esse
+
+//@Override
+//protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+//    var token = this.recoverToken(request);
+//    System.out.println("token aqui deve aparecer " + token);
+//
+//    var login = tokenService.validateToken(token);
+//
+//    if(login != null){
+//        User user = userRepository.findByEmail(login).orElseThrow(() -> new RuntimeException("user not found"));
+//
+//        var authorithies = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+//        var authentication = new UsernamePasswordAuthenticationToken(user, null, authorithies);
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//
+//    }
+//    filterChain.doFilter(request, response);
+//}
