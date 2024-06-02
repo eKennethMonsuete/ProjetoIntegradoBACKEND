@@ -2,7 +2,10 @@ package br.com.projecao.projetogym.api.measures;
 
 import br.com.projecao.projetogym.api.user.userDTO1;
 
-public record MeasuresDTO(float weight,
+public record MeasuresDTO(
+                            Long id,
+
+                            float weight,
 
                           float left_biceps,
 

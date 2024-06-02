@@ -2,6 +2,7 @@ package br.com.projecao.projetogym.api.controller;
 
 import br.com.projecao.projetogym.api.measures.MeasureWithUserDTO;
 import br.com.projecao.projetogym.api.measures.Measures;
+import br.com.projecao.projetogym.api.user.UpdateUserDTO;
 import br.com.projecao.projetogym.api.user.User;
 import br.com.projecao.projetogym.api.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class MeasuresController {
 
     @PostMapping("save/{userId}")
     @Transactional
-    public ResponseEntity saveMeasures(@RequestBody updateMeasuresDTO data, @PathVariable Long userId){
+    public ResponseEntity saveMeasures(@RequestHeader("Authorization") String token, @RequestBody updateMeasuresDTO data, @PathVariable Long userId){
 
         Measures saveMeasures = measuresService.saveMeasures(data, userId);
         if (saveMeasures != null){
@@ -48,10 +49,12 @@ public class MeasuresController {
 
     }
 
-    @PutMapping
+    //@RequestHeader("Authorization") String token,
+
+    @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity updateMeasure(@RequestBody updateMeasuresDTO data){
-        measuresService.updateMeasures(data.id(), data);
+    public ResponseEntity updateMeasure(@PathVariable Long id, @RequestBody updateMeasuresDTO data){
+        measuresService.updateMeasures(id, data);
         return ResponseEntity.ok("deu certo");
     }
 
@@ -59,7 +62,15 @@ public class MeasuresController {
         Measures newMeasures = new Measures(data);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteUser(@PathVariable Long id){
+        System.out.println("delete measure + algum id ");
+        measuresService.deleteMeasure(id);
+        return  ResponseEntity.ok().build() ;
 
+        //talvez seja melhor usar o @PathVariable @PathVariable Long id
+
+    }
 
 
 

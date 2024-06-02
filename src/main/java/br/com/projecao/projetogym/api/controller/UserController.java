@@ -31,28 +31,23 @@ public class UserController {
         return userService.mapUserToDTO(user);
     }
 
-    @PostMapping
+
     @Transactional
     @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity salvarUser(@RequestBody userDTO data ){
-       // User newUser = new User(data);
-        userService.createUser(data);
-       System.out.println("algo no user 8080");
-        return ResponseEntity.ok(data);
+    public void salvarUser(@RequestBody userDTO data){}
 
-    }
-
-    @PutMapping
+    @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity updateUser(@RequestBody UpdateUserDTO data) {
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity updateUser(@PathVariable Long id, @RequestBody UpdateUserDTO data) {
 
-        userService.updateUser(data.id(), data);
+        userService.updateUser(id, data);
        return ResponseEntity.ok("deu certo");
 
     }
 
-    @DeleteMapping()
-    public ResponseEntity deleteUser(@RequestBody UpdateUserDTO id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteUser(@PathVariable Long id){
         userService.deleteUser(id);
             return  ResponseEntity.ok().build() ;
 

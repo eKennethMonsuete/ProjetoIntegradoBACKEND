@@ -1,6 +1,7 @@
 package br.com.projecao.projetogym.api.service;
 
 
+import br.com.projecao.projetogym.api.user.UpdateUserDTO;
 import br.com.projecao.projetogym.api.workout.updateWorkoutDTO;
 import br.com.projecao.projetogym.api.workout.workoutDTO;
 import br.com.projecao.projetogym.api.workout.Workout;
@@ -52,6 +53,11 @@ public class workoutService {
 
         }
 
+    }
+
+    public ResponseEntity deleteUser(updateWorkoutDTO data){
+        workoutRepository.deleteById(data.id());
+        return ResponseEntity.ok("Treino deletado");
     }
 
 

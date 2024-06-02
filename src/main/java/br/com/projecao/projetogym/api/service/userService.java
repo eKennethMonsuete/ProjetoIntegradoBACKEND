@@ -40,6 +40,7 @@ public class userService {
     }
     public MeasuresDTO mapMeasureToDTO(Measures measure) {
         return new MeasuresDTO(
+                measure.getId(),
                 measure.getWeight(),
                 measure.getLeft_biceps(),
                 measure.getRight_biceps(),
@@ -91,11 +92,11 @@ public class userService {
     }
 
     public ResponseEntity updateUser(Long id, UpdateUserDTO data){
-        Optional<User> optionalUser = repository.findById(data.id());
+        Optional<User> optionalUser = repository.findById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             user.setName(data.name());
-            user.setPassword(data.password());
+            user.setPassword(passwordEncoder.encode(data.password()));
             user.setEmail(data.email());
             user.setSurname(data.surname());
             user.setWhatsapp(data.whatsapp());
@@ -105,8 +106,8 @@ public class userService {
         }
     }
 
-    public ResponseEntity deleteUser(UpdateUserDTO data){
-        repository.deleteById(data.id());
+    public ResponseEntity deleteUser(Long id){
+        repository.deleteById(id);
         return ResponseEntity.ok("user deletado");
     }
 

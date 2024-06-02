@@ -117,4 +117,9 @@ public class measuresService {
     }
   }
 
+    public ResponseEntity deleteMeasure(Long id){
+        repository.deleteById(id);
+        return ResponseEntity.ok("Medida deletado");
+    }
+
 }
