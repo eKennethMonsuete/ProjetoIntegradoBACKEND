@@ -40,6 +40,7 @@ public class UserController {
     @Transactional
     @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity updateUser(@PathVariable Long id, @RequestBody UpdateUserDTO data) {
+        System.out.println("bateu aqui no put user/id");
 
         userService.updateUser(id, data);
        return ResponseEntity.ok("deu certo");
