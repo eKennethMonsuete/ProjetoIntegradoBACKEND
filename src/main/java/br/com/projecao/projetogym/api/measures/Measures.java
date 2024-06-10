@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import lombok.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 @Transactional
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,6 +38,11 @@ public class Measures {
 
     private float right_calf;
 
+    private String date;
+
+    private String registrationDate;
+
+
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
@@ -49,9 +57,11 @@ public class Measures {
         this.left_calf = data.left_calf();
         this.right_calf = data.right_calf();
         this.user = data.user();
+        this.date = data.date();
+        this.registrationDate = data.registrationDate();
     }
 
-    public Measures(float weight, float left_biceps, float right_biceps, float waist, float left_quadriceps, float right_quadriceps, float left_calf, float right_calf) {
+    public Measures(float weight, float left_biceps, float right_biceps, float waist, float left_quadriceps, float right_quadriceps, float left_calf, float right_calf, String date, String registrationDate  ) {
         this.weight = weight;
         this.left_biceps = left_biceps;
         this.right_biceps = right_biceps;
@@ -60,6 +70,14 @@ public class Measures {
         this.right_quadriceps = right_quadriceps;
         this.left_calf = left_calf;
         this.right_calf = right_calf;
+        this.date = date;
+        this.registrationDate = registrationDate;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        // Define a data atual no formato "dd/MM/yyyy"
+        this.registrationDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
 

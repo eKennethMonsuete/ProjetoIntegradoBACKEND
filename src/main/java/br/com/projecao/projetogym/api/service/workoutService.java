@@ -47,6 +47,9 @@ public class workoutService {
             workout.setWorkout1(data.workout1());
             workout.setWorkout2(data.workout2());
             workout.setNote(data.note());
+            workout.setName(data.name());
+            workout.setWorkoutName(data.workoutName());
+            workout.setSocialMedia(data.socialMedia());
             return ResponseEntity.ok("treino atualizado");
         } else {
             throw new EntityNotFoundException();
@@ -55,8 +58,8 @@ public class workoutService {
 
     }
 
-    public ResponseEntity deleteUser(updateWorkoutDTO data){
-        workoutRepository.deleteById(data.id());
+    public ResponseEntity deleteWorkout(Long id){
+        workoutRepository.deleteById(id);
         return ResponseEntity.ok("Treino deletado");
     }
 

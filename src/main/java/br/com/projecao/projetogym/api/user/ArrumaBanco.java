@@ -19,7 +19,7 @@ public class ArrumaBanco {
 
        User user = new User();
 
-        Measures m = new Measures(2, 3, 4,5,6,7,8,7);
+
 
        // Measures m2 = new Measures();
 
@@ -30,7 +30,6 @@ public class ArrumaBanco {
 
         em.getTransaction().begin();
         em.persist(user);
-        em.persist(m);
         em.getTransaction().commit();
         em.close();
 

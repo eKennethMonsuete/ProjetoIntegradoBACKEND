@@ -27,19 +27,26 @@ public class WorkoutController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity saveWorkout(@RequestHeader("Authorization") String token,@RequestBody workoutDTO data){
+    public ResponseEntity saveWorkout(@RequestBody workoutDTO data){
         System.out.println("chegou aqui em /workout save");
         workourService.saveWorkout(data);
         return ResponseEntity.ok("Treino Salvo");
 
     }
+    //@RequestHeader("Authorization") String token,
 
-    @PutMapping
+    @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity updateWorkout(@RequestBody updateWorkoutDTO data){
-        workourService.updateWorkout(data.id(), data);
+    public ResponseEntity updateWorkout(@PathVariable Long id, @RequestBody updateWorkoutDTO data){
+        workourService.updateWorkout(id, data);
         return ResponseEntity.ok("Treino Atualizado");
 
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteWorkout(@PathVariable Long id){
+        workourService.deleteWorkout(id);
+        return  ResponseEntity.ok().build() ;
     }
 
 

@@ -53,6 +53,8 @@ public class measuresService {
                 measure.getRight_quadriceps(),
                 measure.getLeft_calf(),
                 measure.getRight_calf(),
+                measure.getDate(),
+                measure.getRegistrationDate(),
                 userDTO1
 
         );
@@ -85,7 +87,10 @@ public class measuresService {
             measures.setRight_quadriceps(data.right_quadriceps());
             measures.setLeft_calf(data.left_calf());
             measures.setRight_calf(data.right_calf());
+            measures.setDate(data.date());
+            measures.setRegistrationDate(data.registrationDate());
             measures.setUser(user);
+
             return repository.save(measures);
         }else {
             return null;
@@ -109,6 +114,7 @@ public class measuresService {
             measures.setRight_quadriceps(data.right_quadriceps());
             measures.setLeft_calf(data.left_calf());
             measures.setRight_calf(data.right_calf());
+            measures.setDate(data.date());
             return ResponseEntity.ok(measures);
         }
         else {

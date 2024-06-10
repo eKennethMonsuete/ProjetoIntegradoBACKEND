@@ -3,7 +3,9 @@ package br.com.projecao.projetogym.api.measures;
 import br.com.projecao.projetogym.api.user.User;
 
 public record updateMeasuresDTO(
+
         Long id,
+
         float weight,
 
         float left_biceps,
@@ -19,6 +21,10 @@ public record updateMeasuresDTO(
         float left_calf,
 
         float right_calf,
+
+        String date,
+
+        String registrationDate,
 
         User user
 

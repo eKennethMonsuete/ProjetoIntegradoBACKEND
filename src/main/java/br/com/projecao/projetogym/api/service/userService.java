@@ -48,7 +48,9 @@ public class userService {
                 measure.getLeft_quadriceps(),
                 measure.getRight_quadriceps(),
                 measure.getLeft_calf(),
-                measure.getRight_calf()
+                measure.getRight_calf(),
+                measure.getDate(),
+                measure.getRegistrationDate()
 
         );
     }

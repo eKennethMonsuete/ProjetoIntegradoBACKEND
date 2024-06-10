@@ -38,7 +38,7 @@ public class MeasuresController {
 
     @PostMapping("save/{userId}")
     @Transactional
-    public ResponseEntity saveMeasures(@RequestHeader("Authorization") String token, @RequestBody updateMeasuresDTO data, @PathVariable Long userId){
+    public ResponseEntity saveMeasures(@RequestBody updateMeasuresDTO data, @PathVariable Long userId){
 
         Measures saveMeasures = measuresService.saveMeasures(data, userId);
         if (saveMeasures != null){

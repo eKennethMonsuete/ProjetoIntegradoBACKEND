@@ -7,19 +7,23 @@ public record MeasuresDTO(
 
                             float weight,
 
-                          float left_biceps,
+                            float left_biceps,
 
-                          float right_biceps,
+                            float right_biceps,
 
-                          float waist,
+                            float waist,
 
-                          float left_quadriceps,
+                            float left_quadriceps,
 
-                          float right_quadriceps,
+                            float right_quadriceps,
 
-                          float left_calf,
+                            float left_calf,
 
-                          float right_calf
+                            float right_calf,
+
+                            String date,
+
+                            String registrationDate
 
                          ) {
 }

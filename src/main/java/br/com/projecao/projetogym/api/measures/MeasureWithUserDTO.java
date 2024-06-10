@@ -11,6 +11,9 @@ public record MeasureWithUserDTO(
         float right_quadriceps,
         float left_calf,
         float right_calf,
+        String date,
+
+        String registrationDate,
         userDTO user
 ) {
 }
