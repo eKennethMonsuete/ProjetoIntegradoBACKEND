@@ -1,6 +1,7 @@
 package br.com.projecao.projetogym.api.user;
 
 
+import br.com.projecao.projetogym.api.exclusiveWorkout.ExclusiveWorkout;
 import br.com.projecao.projetogym.api.measures.Measures;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
@@ -43,6 +44,9 @@ public class User  {
 
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.LAZY )
     private List<Measures> measures;
+
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.LAZY )
+    private List<ExclusiveWorkout> exclusiveWorkouts ;
 
 
 

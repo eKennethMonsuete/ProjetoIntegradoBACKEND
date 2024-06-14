@@ -47,8 +47,6 @@ public class AuthController {
         }
         return ResponseEntity.badRequest().build();
 
-
-
     }
 
         @PostMapping("/register")

@@ -55,7 +55,7 @@ public class MeasuresController {
     @Transactional
     public ResponseEntity updateMeasure(@PathVariable Long id, @RequestBody updateMeasuresDTO data){
         measuresService.updateMeasures(id, data);
-        return ResponseEntity.ok("deu certo");
+        return ResponseEntity.ok("Medida Atualizada");
     }
 
     public void salvarMedidasComUser(@RequestBody updateMeasuresDTO data){
@@ -66,7 +66,7 @@ public class MeasuresController {
     public ResponseEntity deleteUser(@PathVariable Long id){
         System.out.println("delete measure + algum id ");
         measuresService.deleteMeasure(id);
-        return  ResponseEntity.ok().build() ;
+        return  ResponseEntity.ok("Medida Excluida Permanentemente") ;
 
         //talvez seja melhor usar o @PathVariable @PathVariable Long id
 

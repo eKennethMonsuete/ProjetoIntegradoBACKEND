@@ -1,6 +1,8 @@
 package br.com.projecao.projetogym.api.service;
 
 
+import br.com.projecao.projetogym.api.exclusiveWorkout.ExclusiveWorkout;
+import br.com.projecao.projetogym.api.exclusiveWorkout.ExclusiveWorkoutDTO;
 import br.com.projecao.projetogym.api.infra.security.TokenService;
 import br.com.projecao.projetogym.api.measures.Measures;
 import br.com.projecao.projetogym.api.measures.MeasuresDTO;
@@ -38,6 +40,21 @@ public class userService {
                 .collect(Collectors.toList());
 
     }
+
+    public ExclusiveWorkoutDTO mapExclusiveWorkoutDTO(ExclusiveWorkout exclusiveWorkout){
+        return new ExclusiveWorkoutDTO(
+                exclusiveWorkout.getId(),
+                exclusiveWorkout.getNome(),
+                exclusiveWorkout.getAutor(),
+                exclusiveWorkout.getObjetivo(),
+                exclusiveWorkout.getWorkout1(),
+                exclusiveWorkout.getWorkout2(),
+                exclusiveWorkout.getWorkout3(),
+                exclusiveWorkout.getRegistrationDate(),
+                exclusiveWorkout.getDescricao()
+        );
+    }
+
     public MeasuresDTO mapMeasureToDTO(Measures measure) {
         return new MeasuresDTO(
                 measure.getId(),
@@ -60,8 +77,18 @@ public class userService {
         List<MeasuresDTO> measureDTOs = user.getMeasures().stream()
                 .map(this::mapMeasureToDTO)
                 .collect(Collectors.toList());
-        return new userDTO(user.getName(), user.getEmail(), user.getPassword(), user.getSurname(), user.getWhatsapp(), measureDTOs);
+
+        List<ExclusiveWorkoutDTO> exclusiveWorkoutDTOs = user.getExclusiveWorkouts().stream()
+                .map(this::mapExclusiveWorkoutDTO)
+                .collect(Collectors.toList());
+
+
+        return new userDTO(user.getName(), user.getEmail(), user.getPassword(), user.getSurname(), user.getWhatsapp(), measureDTOs, exclusiveWorkoutDTOs );
     }
+
+
+
+
 
     public User findOneUser(Long id){
       Optional<User> user = repository.findById(id);

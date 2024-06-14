@@ -42,8 +42,8 @@ public class measuresService {
                 user.getPassword(),
                 user.getSurname(),
                 user.getWhatsapp(),
-                null // Não incluir as medidas do usuário para evitar recursão
-        );
+                null, // Não incluir as medidas do usuário para evitar recursão
+                 null );
         return new MeasureWithUserDTO(
                 measure.getWeight(),
                 measure.getLeft_biceps(),
