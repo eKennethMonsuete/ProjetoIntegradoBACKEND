@@ -36,8 +36,10 @@ public class ExclusiveWorkoutController {
     @PostMapping("savework/{userId}")
     @Transactional
     public ResponseEntity saveExclusiveWorkout(@RequestBody exclusiveWorkoutWithUserDTO data, @PathVariable Long userId) {
+        System.out.println("bateu em POST controles exclusiveWorkout");
         ExclusiveWorkout saveExclusiveWorkout = exclusiveWorkoutService.saveExclusiveWorkout(data, userId);
         if(saveExclusiveWorkout != null) {
+            System.out.println(data.toString());
             return ResponseEntity.ok().body("Treino exclusivo Salvo");//caso eu coloque saveExclu volta loop eterno.
         }else {
             return ResponseEntity.badRequest().body("Usuário não encontrado");
@@ -53,6 +55,7 @@ public class ExclusiveWorkoutController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteExclusiveWorkout(@PathVariable Long id) {
+        System.out.println("chegou algo no delete");
         exclusiveWorkoutService.deleteExclusiveWorkout(id);
         return ResponseEntity.ok().body("Treino exclusivo Deletado Permantentemente");
     }

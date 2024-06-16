@@ -45,13 +45,13 @@ public class userService {
         return new ExclusiveWorkoutDTO(
                 exclusiveWorkout.getId(),
                 exclusiveWorkout.getNome(),
-                exclusiveWorkout.getAutor(),
+                exclusiveWorkout.getDescricao(),
                 exclusiveWorkout.getObjetivo(),
                 exclusiveWorkout.getWorkout1(),
                 exclusiveWorkout.getWorkout2(),
                 exclusiveWorkout.getWorkout3(),
                 exclusiveWorkout.getRegistrationDate(),
-                exclusiveWorkout.getDescricao()
+                exclusiveWorkout.getAutor()
         );
     }
 

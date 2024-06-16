@@ -10,7 +10,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Transactional
-@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
@@ -55,4 +54,21 @@ public class ExclusiveWorkout {
         this.autor = dto.autor();
 
     }
+
+    public ExclusiveWorkout(String autor, String registrationDate, String workout3, String workout2, String workout1, String objetivo, String descricao, String nome) {
+        this.autor = autor;
+        this.registrationDate = registrationDate;
+        this.workout3 = workout3;
+        this.workout2 = workout2;
+        this.workout1 = workout1;
+        this.objetivo = objetivo;
+        this.descricao = descricao;
+        this.nome = nome;
+    }
+
+    public ExclusiveWorkout() {
+
+    }
+
+
 }

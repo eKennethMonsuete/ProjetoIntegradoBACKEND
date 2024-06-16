@@ -27,6 +27,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public userDTO getOneUser(@PathVariable Long id){
+        System.out.println("bateu algo aqui user controler get by id");
         User user = userService.findOneUser(id);
         return userService.mapUserToDTO(user);
     }
